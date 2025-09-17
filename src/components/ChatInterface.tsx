@@ -133,7 +133,7 @@ const ChatInterface: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-border">
         <div className="flex items-center gap-4">
-          <Avatar className="h-14 w-14">
+          <Avatar className="h-16 w-16">
             <AvatarImage 
               src={dffLogo} 
               alt="Dubai Future Foundation"
@@ -153,7 +153,7 @@ const ChatInterface: React.FC = () => {
           <img 
             src={dffHeaderLogo} 
             alt="Dubai Future Foundation"
-            className="h-14 object-contain"
+            className="h-16 object-contain"
           />
         </div>
       </div>
