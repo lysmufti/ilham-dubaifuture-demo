@@ -188,7 +188,7 @@ const ChatInterface: React.FC = () => {
             <div
               className={`max-w-[80%] p-4 rounded-xl text-sm ${
                 message.isUser
-                  ? 'bg-white/10 backdrop-blur-md border border-white/20 shadow-md text-foreground'
+                  ? 'bg-white/5 backdrop-blur-xl border border-white/30 shadow-2xl shadow-white/10 text-foreground relative before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-br before:from-white/10 before:to-transparent before:pointer-events-none'
                   : 'bg-[hsl(var(--dff-bot-message))] text-foreground border border-border'
               }`}
             >
