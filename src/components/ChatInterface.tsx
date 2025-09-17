@@ -84,7 +84,7 @@ const ChatInterface: React.FC = () => {
               : msg
           )
         );
-      }, responseText.length * 50 + 500);
+      }, responseText.length * 35 + 500);
 
     } catch (error) {
       console.error('Error sending message:', error);
@@ -163,7 +163,7 @@ const ChatInterface: React.FC = () => {
                 <StreamingText 
                   text={message.text} 
                   isStreaming={true}
-                  speed={50}
+                  speed={35}
                 />
               ) : (
                 message.text
