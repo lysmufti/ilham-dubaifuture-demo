@@ -9,7 +9,6 @@ import dffLogo from '@/assets/dff-logo.png';
 import dffHeaderLogo from '@/assets/dff-header-logo.png';
 import AnimatedBackground from "@/components/AnimatedBackground";
 
-
 interface Message {
   id: string;
   text: string;
