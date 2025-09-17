@@ -141,40 +141,37 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             }`}
           >
             {!message.isUser && (
-              <Avatar className="h-10 w-10 flex-shrink-0">
-                <AvatarImage 
-                  src={dffLogo} 
-                  alt="ilham"
-                  className="object-contain bg-transparent"
-                />
-                <AvatarFallback className="bg-transparent">AI</AvatarFallback>
-              </Avatar>
-            )}
-            
-            <div className="flex-1 flex flex-col">
-              {!message.isUser && (
-                <div className="text-xs text-muted-foreground mb-1 text-right">
+              <div className="flex items-start gap-2">
+                <Avatar className="h-10 w-10 flex-shrink-0">
+                  <AvatarImage 
+                    src={dffLogo} 
+                    alt="ilham"
+                    className="object-contain bg-transparent"
+                  />
+                  <AvatarFallback className="bg-transparent">AI</AvatarFallback>
+                </Avatar>
+                <div className="text-xs text-muted-foreground mt-2">
                   {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </div>
-              )}
-              
-              <div
-                className={`max-w-[80%] p-4 rounded-xl text-sm ${
-                  message.isUser
-                    ? 'bg-white/10 backdrop-blur-md border border-white/20 shadow-md text-foreground ml-auto'
-                    : 'bg-[hsl(var(--dff-bot-message))] text-foreground border border-border'
-                }`}
-              >
-                {message.isStreaming ? (
-                  <StreamingText 
-                    text={message.text} 
-                    isStreaming={true}
-                    speed={50}
-                  />
-                ) : (
-                  message.text
-                )}
               </div>
+            )}
+            
+            <div
+              className={`max-w-[80%] p-4 rounded-xl text-sm ${
+                message.isUser
+                  ? 'bg-white/10 backdrop-blur-md border border-white/20 shadow-md text-foreground'
+                  : 'bg-[hsl(var(--dff-bot-message))] text-foreground border border-border'
+              }`}
+            >
+              {message.isStreaming ? (
+                <StreamingText 
+                  text={message.text} 
+                  isStreaming={true}
+                  speed={50}
+                />
+              ) : (
+                message.text
+              )}
             </div>
 
             {message.isUser && (
