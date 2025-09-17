@@ -25,7 +25,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const [messages, setMessages] = useState<Message[]>([
     {
         id: '1',
-        text: 'Hello! I\'m ilham, Dubai Future Foundation\'s AI assistant. How can I help you today?',
+        text: 'Welcome, I’m ilham — your guide to Dubai Future Foundation’s AI in Creative Industries guidelines.',
         isUser: false,
         timestamp: new Date(),
     }
