@@ -67,9 +67,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
       });
 
       const data = await response.json();
+      const responseText = data.output || 'Sorry, I couldn\'t process your request at the moment.';
+      
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: data.output || 'Sorry, I couldn\'t process your request at the moment.',
+        text: responseText,
         isUser: false,
         isStreaming: true,
         timestamp: new Date(),
@@ -77,7 +79,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
       setMessages(prev => [...prev, botMessage]);
       
-      // Stop streaming after a delay
+      // Stop streaming after text finishes streaming
       setTimeout(() => {
         setMessages(prev => 
           prev.map(msg => 
@@ -86,7 +88,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
               : msg
           )
         );
-      }, (data.output?.length || 50) * 50);
+      }, responseText.length * 50 + 500);
 
     } catch (error) {
       console.error('Error sending message:', error);
