@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import StreamingText from './StreamingText';
 import dffLogo from '@/assets/dff-logo.png';
+import dffHeaderLogo from '@/assets/dff-header-logo.png';
 
 interface Message {
   id: string;
@@ -118,9 +119,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
           </Avatar>
           <h1 className="text-2xl font-bold text-foreground">إلهام | ilham.ai</h1>
         </div>
-        <div className="text-lg font-medium text-muted-foreground">
-          DUBAI FUTURE FOUNDATION
-        </div>
+        <img 
+          src={dffHeaderLogo} 
+          alt="Dubai Future Foundation"
+          className="h-8 object-contain"
+        />
       </div>
 
       {/* Messages */}
@@ -144,7 +147,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             )}
             
             <div
-              className={`max-w-[80%] p-4 rounded-xl ${
+              className={`max-w-[80%] p-4 rounded-xl text-sm ${
                 message.isUser
                   ? 'bg-white/10 backdrop-blur-md border border-white/20 shadow-md text-foreground'
                   : 'bg-[hsl(var(--dff-bot-message))] text-foreground border border-border'
