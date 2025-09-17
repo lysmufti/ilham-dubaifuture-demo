@@ -141,19 +141,14 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             }`}
           >
             {!message.isUser && (
-              <div className="flex items-start gap-2">
-                <Avatar className="h-10 w-10 flex-shrink-0">
-                  <AvatarImage 
-                    src={dffLogo} 
-                    alt="ilham"
-                    className="object-contain bg-transparent"
-                  />
-                  <AvatarFallback className="bg-transparent">AI</AvatarFallback>
-                </Avatar>
-                <div className="text-xs text-muted-foreground mt-2">
-                  {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </div>
-              </div>
+              <Avatar className="h-10 w-10 flex-shrink-0">
+                <AvatarImage 
+                  src={dffLogo} 
+                  alt="ilham"
+                  className="object-contain bg-transparent"
+                />
+                <AvatarFallback className="bg-transparent">AI</AvatarFallback>
+              </Avatar>
             )}
             
             <div
