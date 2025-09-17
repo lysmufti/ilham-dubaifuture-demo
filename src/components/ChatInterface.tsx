@@ -140,7 +140,7 @@ const ChatInterface: React.FC = () => {
             <h1 className="text-2xl font-bold text-foreground">إلهام | ilham.ai</h1>
             <div className="text-xs text-muted-foreground mt-1 leading-tight">
               <div>AI Creative Industries Assistant</div>
-              <div>Powered by AI in creative industries guidelines</div>
+              <div>Powered by Contextual RAG by Laith Mufti</div>
             </div>
           </div>
         </div>
@@ -252,7 +252,6 @@ const ChatInterface: React.FC = () => {
             className="flex-1 bg-input border-border text-foreground placeholder:text-muted-foreground"
             disabled={isLoading}
           />
-          <SettingsDialog onWebhookChange={setWebhookUrl} />
           <Button
             onClick={handleSendMessage}
             disabled={isLoading || !inputValue.trim()}
@@ -260,6 +259,7 @@ const ChatInterface: React.FC = () => {
           >
             <Send className="h-4 w-4" />
           </Button>
+          <SettingsDialog onWebhookChange={setWebhookUrl} />
         </div>
       </div>
     </div>
