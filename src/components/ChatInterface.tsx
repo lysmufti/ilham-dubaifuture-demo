@@ -186,7 +186,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Type your message here..."
+            placeholder="Ask me about Dubai’s AI in Creative Industries guidelines…"
             className="flex-1 bg-input border-border text-foreground placeholder:text-muted-foreground"
             disabled={isLoading}
           />
