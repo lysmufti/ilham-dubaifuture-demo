@@ -107,15 +107,20 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-border">
-        <h1 className="text-2xl font-bold text-foreground">ilham</h1>
-        <Avatar className="h-12 w-12">
-          <AvatarImage 
-            src={dffLogo} 
-            alt="Dubai Future Foundation"
-            className="object-contain bg-transparent"
-          />
-          <AvatarFallback className="bg-transparent">DFF</AvatarFallback>
-        </Avatar>
+        <div className="flex items-center gap-4">
+          <Avatar className="h-14 w-14">
+            <AvatarImage 
+              src={dffLogo} 
+              alt="Dubai Future Foundation"
+              className="object-contain bg-transparent"
+            />
+            <AvatarFallback className="bg-transparent">DFF</AvatarFallback>
+          </Avatar>
+          <h1 className="text-2xl font-bold text-foreground">إلهام</h1>
+        </div>
+        <div className="text-lg font-medium text-muted-foreground">
+          ilham.ai
+        </div>
       </div>
 
       {/* Messages */}
