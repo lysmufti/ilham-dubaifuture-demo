@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import StreamingText from './StreamingText';
+import SettingsDialog from './SettingsDialog';
 import dffLogo from '@/assets/dff-logo.png';
 import dffHeaderLogo from '@/assets/dff-header-logo.png';
 
@@ -15,13 +16,8 @@ interface Message {
   timestamp: Date;
 }
 
-interface ChatInterfaceProps {
-  webhookUrl?: string;
-}
-
-const ChatInterface: React.FC<ChatInterfaceProps> = ({ 
-  webhookUrl = "https://your-webhook-url.com/webhook" 
-}) => {
+const ChatInterface: React.FC = () => {
+  const [webhookUrl, setWebhookUrl] = useState("https://your-webhook-url.com/webhook");
   const [messages, setMessages] = useState<Message[]>([
     {
         id: '1',
@@ -126,11 +122,14 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
           </Avatar>
           <h1 className="text-2xl font-bold text-foreground">إلهام | ilham.ai</h1>
         </div>
-        <img 
-          src={dffHeaderLogo} 
-          alt="Dubai Future Foundation"
-          className="h-14 object-contain"
-        />
+        <div className="flex items-center gap-2">
+          <SettingsDialog onWebhookChange={setWebhookUrl} />
+          <img 
+            src={dffHeaderLogo} 
+            alt="Dubai Future Foundation"
+            className="h-14 object-contain"
+          />
+        </div>
       </div>
 
       {/* Messages */}
