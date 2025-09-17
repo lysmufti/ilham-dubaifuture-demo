@@ -116,7 +116,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             />
             <AvatarFallback className="bg-transparent">DFF</AvatarFallback>
           </Avatar>
-          <h1 className="text-2xl font-bold text-foreground">إلهام ilham.ai</h1>
+          <h1 className="text-2xl font-bold text-foreground">إلهام | ilham.ai</h1>
         </div>
         <div className="text-lg font-medium text-muted-foreground">
           DUBAI FUTURE FOUNDATION
