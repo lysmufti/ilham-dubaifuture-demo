@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, ChevronDown } from 'lucide-react';
+import { Send, ChevronDown, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
@@ -138,13 +138,13 @@ const ChatInterface: React.FC = () => {
           </Avatar>
           <div>
             <h1 className="text-2xl font-bold text-foreground">إلهام | ilham.ai</h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              AI Creative Industries Assistant — powered by Dubai Future Foundation guidelines
-            </p>
+            <div className="text-xs text-muted-foreground mt-1 leading-tight">
+              <div>AI Creative Industries Assistant</div>
+              <div>Powered by AI in creative industries guidelines</div>
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <SettingsDialog onWebhookChange={setWebhookUrl} />
           <img 
             src={dffHeaderLogo} 
             alt="Dubai Future Foundation"
@@ -252,6 +252,7 @@ const ChatInterface: React.FC = () => {
             className="flex-1 bg-input border-border text-foreground placeholder:text-muted-foreground"
             disabled={isLoading}
           />
+          <SettingsDialog onWebhookChange={setWebhookUrl} />
           <Button
             onClick={handleSendMessage}
             disabled={isLoading || !inputValue.trim()}

@@ -40,13 +40,13 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ onWebhookChange }) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-muted-foreground hover:text-foreground"
-        >
-          <Settings className="h-5 w-5" />
-        </Button>
+      <Button
+        variant="outline"
+        size="icon"
+        className="bg-secondary/20 hover:bg-accent/30 text-secondary-foreground border border-border/50 transition-all duration-200 hover:shadow-lg hover:shadow-white/10"
+      >
+        <Settings className="h-4 w-4" />
+      </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
