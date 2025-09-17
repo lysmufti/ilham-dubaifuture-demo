@@ -23,7 +23,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const [messages, setMessages] = useState<Message[]>([
     {
         id: '1',
-        text: 'Hello! I\'m Ilham, Dubai Future Foundation\'s AI assistant. How can I help you today?',
+        text: 'Hello! I\'m ilham, Dubai Future Foundation\'s AI assistant. How can I help you today?',
         isUser: false,
     }
   ]);
@@ -107,7 +107,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-border">
-        <h1 className="text-2xl font-bold text-foreground">Ilham</h1>
+        <h1 className="text-2xl font-bold text-foreground">ilham</h1>
         <Avatar className="h-12 w-12">
           <AvatarImage 
             src={dffLogo} 
@@ -131,7 +131,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
               <Avatar className="h-10 w-10 flex-shrink-0">
                 <AvatarImage 
                   src={dffLogo} 
-                  alt="Ilham"
+                  alt="ilham"
                   className="object-contain bg-transparent"
                 />
                 <AvatarFallback className="bg-transparent">AI</AvatarFallback>
