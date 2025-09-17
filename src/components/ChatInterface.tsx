@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send } from 'lucide-react';
+import { Send, ChevronDown, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
@@ -7,7 +7,6 @@ import StreamingText from './StreamingText';
 import SettingsDialog from './SettingsDialog';
 import dffLogo from '@/assets/dff-logo.png';
 import dffHeaderLogo from '@/assets/dff-header-logo.png';
-import AnimatedBackground from "@/components/AnimatedBackground";
 
 interface Message {
   id: string;
@@ -29,7 +28,9 @@ const ChatInterface: React.FC = () => {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -38,6 +39,20 @@ const ChatInterface: React.FC = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    const container = messagesContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
+      setShowScrollButton(!isNearBottom);
+    };
+
+    container.addEventListener('scroll', handleScroll);
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -121,10 +136,15 @@ const ChatInterface: React.FC = () => {
             />
             <AvatarFallback className="bg-transparent">DFF</AvatarFallback>
           </Avatar>
-          <h1 className="text-2xl font-bold text-foreground">إلهام | ilham.ai</h1>
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">إلهام | ilham.ai</h1>
+            <div className="text-xs text-muted-foreground mt-1 leading-tight">
+              <div>AI Creative Industries Assistant</div>
+              <div>Powered by AI in creative industries guidelines</div>
+            </div>
+          </div>
         </div>
         <div className="flex items-center gap-2">
-          <SettingsDialog onWebhookChange={setWebhookUrl} />
           <img 
             src={dffHeaderLogo} 
             alt="Dubai Future Foundation"
@@ -134,7 +154,14 @@ const ChatInterface: React.FC = () => {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6">
+      <div 
+        ref={messagesContainerRef}
+        className="flex-1 overflow-y-auto p-6 space-y-6 relative"
+        style={{
+          maskImage: 'linear-gradient(to bottom, transparent 0px, black 20px, black calc(100% - 20px), transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, black 20px, black calc(100% - 20px), transparent 100%)'
+        }}
+      >
         {messages.map((message) => (
           <div
             key={message.id}
@@ -178,7 +205,40 @@ const ChatInterface: React.FC = () => {
             )}
           </div>
         ))}
+        
+        {isLoading && (
+          <div className="flex items-center gap-3">
+            <Avatar className="h-10 w-10 flex-shrink-0">
+              <AvatarImage 
+                src={dffLogo} 
+                alt="ilham"
+                className="object-contain bg-transparent"
+              />
+              <AvatarFallback className="bg-transparent">AI</AvatarFallback>
+            </Avatar>
+            <div className="bg-[hsl(var(--dff-bot-message))] text-foreground border border-border p-4 rounded-xl text-sm">
+              <div className="flex items-center gap-1">
+                <span>Thinking</span>
+                <div className="flex gap-1">
+                  <div className="w-1 h-1 bg-current rounded-full animate-pulse" style={{ animationDelay: '0ms' }}></div>
+                  <div className="w-1 h-1 bg-current rounded-full animate-pulse" style={{ animationDelay: '150ms' }}></div>
+                  <div className="w-1 h-1 bg-current rounded-full animate-pulse" style={{ animationDelay: '300ms' }}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        
         <div ref={messagesEndRef} />
+        
+        {showScrollButton && (
+          <button
+            onClick={scrollToBottom}
+            className="fixed bottom-24 right-6 z-10 bg-secondary/80 backdrop-blur-sm hover:bg-accent border border-border text-secondary-foreground p-2 rounded-full shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105"
+          >
+            <ChevronDown className="h-4 w-4" />
+          </button>
+        )}
       </div>
 
       {/* Input */}
@@ -192,10 +252,11 @@ const ChatInterface: React.FC = () => {
             className="flex-1 bg-input border-border text-foreground placeholder:text-muted-foreground"
             disabled={isLoading}
           />
+          <SettingsDialog onWebhookChange={setWebhookUrl} />
           <Button
             onClick={handleSendMessage}
             disabled={isLoading || !inputValue.trim()}
-            className="bg-secondary hover:bg-accent text-secondary-foreground border-border"
+            className="bg-secondary hover:bg-accent text-secondary-foreground border-border transition-all duration-200 hover:shadow-lg hover:shadow-white/10"
           >
             <Send className="h-4 w-4" />
           </Button>
