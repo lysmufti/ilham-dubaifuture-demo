@@ -127,7 +127,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
         <img 
           src={dffHeaderLogo} 
           alt="Dubai Future Foundation"
-          className="h-10 object-contain"
+          className="h-14 object-contain"
         />
       </div>
 
