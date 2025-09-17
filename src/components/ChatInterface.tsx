@@ -22,9 +22,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
 }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
-      id: '1',
-      text: 'مرحباً! أنا إلهام، مساعد الذكاء الاصطناعي لمؤسسة دبي للمستقبل. كيف يمكنني مساعدتك اليوم؟',
-      isUser: false,
+        id: '1',
+        text: 'Hello! I\'m Ilham, Dubai Future Foundation\'s AI assistant. How can I help you today?',
+        isUser: false,
     }
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -65,7 +65,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
       const data = await response.json();
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: data.output || 'عذراً، لم أستطع معالجة استفسارك في الوقت الحالي.',
+        text: data.output || 'Sorry, I couldn\'t process your request at the moment.',
         isUser: false,
         isStreaming: true,
       };
@@ -87,7 +87,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
       console.error('Error sending message:', error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: 'عذراً، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.',
+        text: 'Sorry, there was a connection error. Please try again.',
         isUser: false,
       };
       setMessages(prev => [...prev, errorMessage]);
@@ -107,7 +107,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-border">
-        <h1 className="text-2xl font-bold text-foreground">إلهام</h1>
+        <h1 className="text-2xl font-bold text-foreground">Ilham</h1>
         <Avatar className="h-12 w-12">
           <AvatarImage 
             src={dffLogo} 
@@ -131,7 +131,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
               <Avatar className="h-10 w-10 flex-shrink-0">
                 <AvatarImage 
                   src={dffLogo} 
-                  alt="إلهام"
+                  alt="Ilham"
                   className="object-contain bg-transparent"
                 />
                 <AvatarFallback className="bg-transparent">AI</AvatarFallback>
@@ -167,7 +167,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="اكتب رسالتك هنا..."
+            placeholder="Type your message here..."
             className="flex-1 bg-input border-border text-foreground placeholder:text-muted-foreground"
             disabled={isLoading}
           />
