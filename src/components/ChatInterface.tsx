@@ -12,6 +12,7 @@ interface Message {
   text: string;
   isUser: boolean;
   isStreaming?: boolean;
+  timestamp: Date;
 }
 
 interface ChatInterfaceProps {
@@ -26,6 +27,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
         id: '1',
         text: 'Hello! I\'m ilham, Dubai Future Foundation\'s AI assistant. How can I help you today?',
         isUser: false,
+        timestamp: new Date(),
     }
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -47,6 +49,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
       id: Date.now().toString(),
       text: inputValue,
       isUser: true,
+      timestamp: new Date(),
     };
 
     setMessages(prev => [...prev, userMessage]);
@@ -69,6 +72,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
         text: data.output || 'Sorry, I couldn\'t process your request at the moment.',
         isUser: false,
         isStreaming: true,
+        timestamp: new Date(),
       };
 
       setMessages(prev => [...prev, botMessage]);
@@ -90,6 +94,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
         id: (Date.now() + 1).toString(),
         text: 'Sorry, there was a connection error. Please try again.',
         isUser: false,
+        timestamp: new Date(),
       };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
@@ -122,7 +127,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
         <img 
           src={dffHeaderLogo} 
           alt="Dubai Future Foundation"
-          className="h-8 object-contain"
+          className="h-10 object-contain"
         />
       </div>
 
@@ -136,14 +141,19 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             }`}
           >
             {!message.isUser && (
-              <Avatar className="h-10 w-10 flex-shrink-0">
-                <AvatarImage 
-                  src={dffLogo} 
-                  alt="ilham"
-                  className="object-contain bg-transparent"
-                />
-                <AvatarFallback className="bg-transparent">AI</AvatarFallback>
-              </Avatar>
+              <div className="flex items-start gap-2">
+                <Avatar className="h-10 w-10 flex-shrink-0">
+                  <AvatarImage 
+                    src={dffLogo} 
+                    alt="ilham"
+                    className="object-contain bg-transparent"
+                  />
+                  <AvatarFallback className="bg-transparent">AI</AvatarFallback>
+                </Avatar>
+                <div className="text-xs text-muted-foreground mt-2">
+                  {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </div>
+              </div>
             )}
             
             <div
@@ -163,6 +173,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 message.text
               )}
             </div>
+
+            {message.isUser && (
+              <div className="text-xs text-muted-foreground mt-2">
+                {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </div>
+            )}
           </div>
         ))}
         <div ref={messagesEndRef} />
