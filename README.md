@@ -1,73 +1,93 @@
-# Welcome to your Lovable project
+# ilham.ai — Dubai Future Foundation AI Assistant  
 
-## Project info
+<p align="center">
+  <img src="https://i.imgur.com/Eqgf11L.gif" width="900" alt="Demo Animation">
+</p>
+<p align="center">
+  <a href="https://ilham-dubaifuture-demo.lovable.app/">
+    <img src="https://img.shields.io/badge/Website-Live%20Demo-00BCD4?style=for-the-badge" alt="Live Demo">
+  </a>
+</p>
 
-**URL**: https://lovable.dev/projects/74117892-45b0-4c49-919b-abd2609c89fe
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+##  Introduction  
+**ilham.ai** is an assistant designed for the **AI in Creative Industries initiative Guidlines** by the **Dubai Future Foundation**.   
 
-**Use Lovable**
+**Live Demo:** [https://ilham-dubaifuture-demo.lovable.app/](https://ilham-dubaifuture-demo.lovable.app/)  
+**Knowledge Base:** [AI in Creative Industries (PDF)](https://www.dubaifuture.ae/wp-content/uploads/2024/10/AI-in-creative-industries-English.pdf)  
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/74117892-45b0-4c49-919b-abd2609c89fe) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+##  Demo Videos  
+- [English Demo — Loom Placeholder](#)  
+- [Arabic Demo — Loom Placeholder](#)  
 
-**Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+##  Architecture  
+ilham.ai is powered by a Retrieval-Augmented Generation (RAG) pipeline built based on my [ai-contextual-rag-agentic-arena](https://github.com/lysmufti/ai-contextual-rag-agentic-arena) project. 
 
-Follow these steps:
+1. **Two Streams of Input**  
+   - **Conversational queries** (e.g., *“Hi, how are you?”*) are routed to a dedicated agent that responds warmly and politely without citations.  
+   - **Knowledge-based queries** are routed through the RAG pipeline to generate answers grounded in the policy document.  
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+2. **RAG Flow**  
+   - User query is vectorized and matched against the *AI in Creative Industries* knowledge base.  
+   - Two retrieval contexts are produced:  
+     - **Context A**: Pinecone retrieval + re-ranking with custom scoring (cosine, token overlap, jaccard, bigram, metadata boosts).  
+     - **Context B**: Independent agent retrieval of relevant passages.  
+   - An arbitration step compares both contexts and merges them into a single, concise answer.  
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+3. **Final Answer Generation**  
+   - If both contexts agree → answer is merged directly.  
+   - If they diverge → the arbitration favors the more accurate/relevant source.  
+   - Responses are formatted in **Markdown** with concise citations to the official policy document.  
 
-# Step 3: Install the necessary dependencies.
-npm i
+4. **Audit Log**
+   - **Postgres (Supabase)** used as an **audit log**, where all chat logs are stored in a dedicated table for traceability and analysis.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+---
 
-**Edit a file directly in GitHub**
+## Evaluation Results  
+ilham was benchmarked on **5 gold-standard questions** derived from the policy document. Evaluation was performed using both:  
+- **Exact-match scoring** against gold answers.  
+- **LLM-as-a-Judge** (an evaluation model checking correctness, completeness, and hallucination risk).  
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+| Question | Score | Notes |
+|----------|-------|-------|
+| 3 pillars of AI in Creative Industries | 5/5 | Perfect |
+| Stakeholder groups collaboration | 5/5 | Perfect |
+| Creative industries as testbed | 5/5 | Perfect |
+| Risks without governance | 4/5 | Expanded beyond benchmark scope |
+| Role of people in AI | 5/5 | Perfect |
 
-**Use GitHub Codespaces**
+**Total Score: 24/25 (96% correctness & accuracy).**  
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+[View Full Evaluation Sheet](https://docs.google.com/spreadsheets/d/1cAPAI9YTIE12vPSM92xD51BEwpk0itRYMGICCDrahF0/edit?gid=0#gid=0)
 
-## What technologies are used for this project?
+---
 
-This project is built with:
+## Technical Details  
+The frontend is built with modern web technologies:  
+- **Vite**  
+- **TypeScript**  
+- **React**  
+- **shadcn-ui**  
+- **Tailwind CSS**  
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Other tools and platforms used:  
+- **n8n** for orchestration  
+- **Pinecone** for vector search  
+- **Postgres** for memory persistence  
+- **OpenAI** for embeddings and generation  
+- **Lovable** for frontend design and deployment  
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/74117892-45b0-4c49-919b-abd2609c89fe) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Project Links  
+- **Live Demo:** [ilham-dubaifuture-demo.lovable.app](https://ilham-dubaifuture-demo.lovable.app/)  
+- **Knowledge Base:** [AI in Creative Industries (PDF)](https://www.dubaifuture.ae/wp-content/uploads/2024/10/AI-in-creative-industries-English.pdf)  
+- **Backend Details:** [ai-contextual-rag-agentic-arena](https://github.com/lysmufti/ai-contextual-rag-agentic-arena)  
