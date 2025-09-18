@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import dffLogo from '@/assets/dff-logo.png';
 
-const AnimatedBackground: React.FC = () => {
+interface AnimatedBackgroundProps {
+  isStreaming?: boolean;
+}
+
+const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ isStreaming = false }) => {
   const [triangles] = useState(() => 
     Array.from({ length: 50 }).map((_, i) => {
       const size = 40 + Math.random() * 140; // 40–180px (increased variance)
@@ -29,9 +33,10 @@ const AnimatedBackground: React.FC = () => {
           backgroundSize: 'contain',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          filter: 'blur(49px)',
-          opacity: 0.2,
+          filter: 'blur(39px)',
+          opacity: isStreaming ? 0.4 : 0.2,
           transform: 'scale(1)',
+          transition: 'opacity 2s ease-in-out',
         }}
       />
       
