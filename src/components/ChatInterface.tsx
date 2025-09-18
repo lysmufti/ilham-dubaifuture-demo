@@ -22,7 +22,7 @@ interface Message {
 
 const ChatInterface: React.FC = React.memo(() => {
   const { toast } = useToast();
-  const [webhookUrl, setWebhookUrl] = useState("https://laithmufti.app.n8n.cloud/webhook-test/test");
+  const [webhookUrl, setWebhookUrl] = useState("https://laithmufti.app.n8n.cloud/webhook/ilham.ai");
   const [messages, setMessages] = useState<Message[]>([
     {
         id: '1',
