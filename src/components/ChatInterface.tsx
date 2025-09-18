@@ -3,6 +3,7 @@ import { Send, ChevronDown, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import ReactMarkdown from 'react-markdown';
 import StreamingText from './StreamingText';
 import SettingsDialog from './SettingsDialog';
 import AnimatedBackground from '@/components/AnimatedBackground';
@@ -215,7 +216,19 @@ const ChatInterface: React.FC = () => {
                 />
               ) : (
                 <div className="whitespace-pre-wrap">
-                  {message.text}
+                  <ReactMarkdown 
+                    components={{
+                      p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                      strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+                      em: ({ children }) => <em className="italic">{children}</em>,
+                      code: ({ children }) => <code className="bg-white/10 px-1 py-0.5 rounded text-sm font-mono">{children}</code>,
+                      ul: ({ children }) => <ul className="list-disc list-inside my-2 space-y-1">{children}</ul>,
+                      ol: ({ children }) => <ol className="list-decimal list-inside my-2 space-y-1">{children}</ol>,
+                      li: ({ children }) => <li>{children}</li>,
+                    }}
+                  >
+                    {message.text}
+                  </ReactMarkdown>
                 </div>
               )}
             </div>

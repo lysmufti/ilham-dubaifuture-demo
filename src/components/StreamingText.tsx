@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 interface StreamingTextProps {
   text: string;
@@ -48,7 +49,19 @@ const StreamingText: React.FC<StreamingTextProps> = ({
 
   return (
     <span className="whitespace-pre-wrap">
-      {displayedText}
+      <ReactMarkdown 
+        components={{
+          p: ({ children }) => <span>{children}</span>,
+          strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+          em: ({ children }) => <em className="italic">{children}</em>,
+          code: ({ children }) => <code className="bg-white/10 px-1 py-0.5 rounded text-sm font-mono">{children}</code>,
+          ul: ({ children }) => <ul className="list-disc list-inside my-2 space-y-1">{children}</ul>,
+          ol: ({ children }) => <ol className="list-decimal list-inside my-2 space-y-1">{children}</ol>,
+          li: ({ children }) => <li>{children}</li>,
+        }}
+      >
+        {displayedText}
+      </ReactMarkdown>
       {isStreaming && currentIndex < text.length && (
         <span className="animate-pulse">|</span>
       )}
