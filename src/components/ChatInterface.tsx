@@ -15,6 +15,7 @@ interface Message {
   isUser: boolean;
   isStreaming?: boolean;
   timestamp: Date;
+  streamingSpeed?: number;
 }
 
 const ChatInterface: React.FC = () => {
@@ -83,12 +84,24 @@ const ChatInterface: React.FC = () => {
       const data = await response.json();
       const responseText = data.output || 'Sorry, I couldn\'t process your request at the moment.';
       
+      // Calculate variable speed based on message length
+      // Short messages: slower (60ms), Long messages: faster (20ms)
+      const calculateSpeed = (textLength: number) => {
+        if (textLength < 50) return 60;  // Short messages - slower
+        if (textLength > 500) return 20; // Long messages - faster
+        // Linear interpolation between 60ms and 20ms for lengths 50-500
+        return Math.round(60 - ((textLength - 50) / (500 - 50)) * (60 - 20));
+      };
+      
+      const streamingSpeed = calculateSpeed(responseText.length);
+      
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         text: responseText,
         isUser: false,
         isStreaming: true,
         timestamp: new Date(),
+        streamingSpeed, // Add speed to message
       };
 
       setMessages(prev => [...prev, botMessage]);
@@ -102,7 +115,7 @@ const ChatInterface: React.FC = () => {
               : msg
           )
         );
-      }, responseText.length * 35 + 500);
+      }, responseText.length * streamingSpeed + 500);
 
     } catch (error) {
       console.error('Error sending message:', error);
@@ -198,7 +211,7 @@ const ChatInterface: React.FC = () => {
                 <StreamingText 
                   text={message.text} 
                   isStreaming={true}
-                  speed={35}
+                  speed={message.streamingSpeed || 35}
                 />
               ) : (
                 message.text
