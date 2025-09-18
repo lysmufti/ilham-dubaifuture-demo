@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const AnimatedBackground: React.FC = () => {
   const [triangles] = useState(() => 
     Array.from({ length: 50 }).map((_, i) => {
-      const size = 60 + Math.random() * 80; // 60–140px
+      const size = 40 + Math.random() * 140; // 40–180px (increased variance)
       
       const left = Math.random() * 100;
       const top = Math.random() * 100;
