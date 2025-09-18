@@ -11,7 +11,9 @@
 </p>
 
 <p align="center">
-  <img src="https://i.imgur.com/QL3CZvA.gif" alt="Demo Video">
+  <a href="https://www.loom.com/share/e00cb22ed27e4ad89a7b333bf0033879">
+    <img src="https://github.com/user-attachments/assets/5d569752-f326-40fc-bcc7-19e911b35c1e" width="900" alt="Demo Video">
+  </a>
 </p>
 
 <p align="center">
@@ -20,11 +22,6 @@
   </a>
 </p>
 
-
-
-
-[![Loom Demo](https://img.shields.io/badge/Loom-Watch%20Demo-FF4B4B?style=for-the-badge&logo=loom)](https://www.loom.com/share/e00cb22ed27e4ad89a7b333bf0033879)
-[![Watch the Loom Demo](https://cdn.loom.com/sessions/thumbnails/e00cb22ed27e4ad89a7b333bf0033879-with-play.gif)](https://www.loom.com/share/e00cb22ed27e4ad89a7b333bf0033879)
 
 ---
 
