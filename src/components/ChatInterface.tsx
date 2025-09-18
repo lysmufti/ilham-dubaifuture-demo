@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, ChevronDown, Settings, Copy, Square } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import ReactMarkdown from 'react-markdown';
 import StreamingText from './StreamingText';
@@ -37,7 +37,7 @@ const ChatInterface: React.FC = () => {
   const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -340,14 +340,21 @@ const ChatInterface: React.FC = () => {
       {/* Input */}
       <div className="p-6 border-t border-border">
         <div className="flex gap-3">
-          <Input
+          <Textarea
             ref={inputRef}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyPress}
             placeholder="Ask me about Dubai’s AI in Creative Industries guidelines…"
-            className="flex-1 bg-input border-border text-foreground placeholder:text-muted-foreground"
+            className="flex-1 bg-input border-border text-foreground placeholder:text-muted-foreground resize-none min-h-[2.5rem] max-h-32"
             disabled={isLoading}
+            rows={1}
+            style={{ height: 'auto' }}
+            onInput={(e) => {
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = 'auto';
+              target.style.height = Math.min(target.scrollHeight, 128) + 'px';
+            }}
           />
           <Button
             onClick={handleSendMessage}
