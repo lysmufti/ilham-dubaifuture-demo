@@ -191,7 +191,7 @@ const ChatInterface: React.FC = () => {
               className={`max-w-[80%] p-4 rounded-xl text-sm ${
                 message.isUser
                   ? 'bg-white/5 backdrop-blur-xl border border-white/30 shadow-2xl shadow-white/10 text-foreground relative before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-br before:from-white/10 before:to-transparent before:pointer-events-none'
-                  : 'bg-[hsl(var(--dff-bot-message))] text-foreground border border-border'
+                  : 'bg-white/5 backdrop-blur-xl border border-white/30 shadow-2xl shadow-white/20 text-foreground relative before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-br before:from-white/10 before:to-transparent before:pointer-events-none'
               }`}
             >
               {message.isStreaming ? (
@@ -223,7 +223,7 @@ const ChatInterface: React.FC = () => {
               />
               <AvatarFallback className="bg-transparent">AI</AvatarFallback>
             </Avatar>
-            <div className="bg-[hsl(var(--dff-bot-message))] text-foreground border border-border p-4 rounded-xl text-sm">
+            <div className="bg-white/5 backdrop-blur-xl border border-white/30 shadow-2xl shadow-white/20 text-foreground border border-border p-4 rounded-xl text-sm relative before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-br before:from-white/10 before:to-transparent before:pointer-events-none">
               <div className="flex items-center gap-1">
                 <span>Thinking</span>
                 <div className="flex gap-1">
