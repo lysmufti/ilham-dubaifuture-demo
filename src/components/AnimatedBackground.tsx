@@ -37,8 +37,8 @@ const AnimatedBackground: React.FC = () => {
             height: `${t.size}px`,
             clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
             backgroundColor: `rgba(255,255,255,${t.opacity})`,
-            animation: `slow-float ${t.duration}s linear infinite`,
-            animationDelay: `${t.delay}s`,
+            animation: `slow-float ${t.duration}s linear infinite, shimmer ${3 + Math.random() * 2}s ease-in-out infinite`,
+            animationDelay: `${t.delay}s, ${Math.random() * 3}s`,
             ['--rotation' as any]: `${t.rotation}deg`,
           } as React.CSSProperties}
         />
@@ -52,6 +52,12 @@ const AnimatedBackground: React.FC = () => {
           50%  { transform: translate(-30px, 40px) rotate(calc(var(--rotation, 0deg) - 3deg)); }
           75%  { transform: translate(20px, 20px) rotate(calc(var(--rotation, 0deg) + 2deg)); }
           100% { transform: translate(0, 0) rotate(var(--rotation, 0deg)); }
+        }
+        
+        @keyframes shimmer {
+          0%   { opacity: 1; filter: drop-shadow(0 0 2px rgba(255,255,255,0.3)); }
+          50%  { opacity: 0.3; filter: drop-shadow(0 0 8px rgba(255,255,255,0.6)); }
+          100% { opacity: 1; filter: drop-shadow(0 0 2px rgba(255,255,255,0.3)); }
         }
       `}</style>
     </div>
