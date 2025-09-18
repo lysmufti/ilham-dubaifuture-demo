@@ -1,41 +1,44 @@
-import React from 'react';
+import React from "react";
 
 const AnimatedBackground: React.FC = () => {
-  const triangles = Array.from({ length: 15 }, (_, i) => {
-    const size = 60 + Math.random() * 80; // 60-140px
+  const triangles = Array.from({ length: 12 }).map((_, i) => {
+    const size = 60 + Math.random() * 80; // 60–140px
     const left = Math.random() * 100;
     const top = Math.random() * 100;
-    const animationType = ['animate-float-1', 'animate-float-2', 'animate-float-3'][i % 3];
-    const opacity = i % 3 === 0 ? 'opacity-[0.05]' : i % 3 === 1 ? 'opacity-[0.06]' : 'opacity-[0.08]';
-    
-    return {
-      id: i,
-      size,
-      left,
-      top,
-      animationType,
-      opacity,
-      delay: Math.random() * 40, // Random animation delay
-    };
+    const opacity = 0.05 + Math.random() * 0.03;
+    const duration = 90 + Math.random() * 60; // 90–150s
+    const delay = -Math.random() * 30;
+
+    return { id: i, size, left, top, opacity, duration, delay };
   });
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden">
-      {triangles.map((triangle) => (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+      {triangles.map((t) => (
         <div
-          key={triangle.id}
-          className={`absolute border border-white/30 ${triangle.opacity} ${triangle.animationType}`}
+          key={t.id}
+          className="absolute"
           style={{
-            left: `${triangle.left}%`,
-            top: `${triangle.top}%`,
-            width: `${triangle.size}px`,
-            height: `${triangle.size}px`,
-            clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-            animationDelay: `${triangle.delay}s`,
-            backgroundColor: `rgba(255, 255, 255, ${triangle.opacity === 'opacity-[0.05]' ? '0.02' : triangle.opacity === 'opacity-[0.06]' ? '0.03' : '0.04'})`,
+            left: `${t.left}%`,
+            top: `${t.top}%`,
+            width: `${t.size}px`,
+            height: `${t.size}px`,
+            clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
+            backgroundColor: `rgba(255,255,255,${t.opacity})`,
+            animation: `slow-float ${t.duration}s linear infinite`,
+            animationDelay: `${t.delay}s`,
           }}
         />
       ))}
+
+      {/* Inline CSS so Tailwind can't purge it */}
+      <style>{`
+        @keyframes slow-float {
+          0%   { transform: translate(0,0) rotate(0deg); }
+          50%  { transform: translate(12px,-10px) rotate(2deg); }
+          100% { transform: translate(0,0) rotate(0deg); }
+        }
+      `}</style>
     </div>
   );
 };

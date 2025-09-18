@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import StreamingText from './StreamingText';
 import SettingsDialog from './SettingsDialog';
+import AnimatedBackground from '@/components/AnimatedBackground';
 import dffLogo from '@/assets/dff-logo.png';
 import dffHeaderLogo from '@/assets/dff-header-logo.png';
 
@@ -129,7 +130,8 @@ const ChatInterface: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full relative">
+      <AnimatedBackground />
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-border">
         <div className="flex items-center gap-4">
