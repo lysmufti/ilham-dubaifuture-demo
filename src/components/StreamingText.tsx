@@ -52,6 +52,12 @@ const StreamingText: React.FC<StreamingTextProps> = ({
       <ReactMarkdown 
         components={{
           p: ({ children }) => <span>{children}</span>,
+          h1: ({ children }) => <h1 className="text-xl font-bold mb-2">{children}</h1>,
+          h2: ({ children }) => <h2 className="text-lg font-bold mb-2">{children}</h2>,
+          h3: ({ children }) => <h3 className="text-base font-bold mb-1">{children}</h3>,
+          h4: ({ children }) => <h4 className="text-sm font-bold mb-1">{children}</h4>,
+          h5: ({ children }) => <h5 className="text-sm font-semibold mb-1">{children}</h5>,
+          h6: ({ children }) => <h6 className="text-xs font-semibold mb-1">{children}</h6>,
           strong: ({ children }) => <strong className="font-bold">{children}</strong>,
           em: ({ children }) => <em className="italic">{children}</em>,
           code: ({ children }) => <code className="bg-white/10 px-1 py-0.5 rounded text-sm font-mono">{children}</code>,
