@@ -354,7 +354,7 @@ const ChatInterface: React.FC = () => {
             disabled={isLoading || !inputValue.trim()}
             className="bg-secondary hover:bg-accent text-secondary-foreground border-border transition-all duration-200 hover:shadow-lg hover:shadow-white/10"
           >
-            <Send className="h-4 w-4" />
+            <Send className="h-4 w-4 text-white" />
           </Button>
           <SettingsDialog onWebhookChange={setWebhookUrl} />
         </div>
