@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const AnimatedBackground: React.FC = () => {
   const [triangles] = useState(() => 
-    Array.from({ length: 15 }).map((_, i) => {
+    Array.from({ length: 20 }).map((_, i) => {
       const size = 60 + Math.random() * 80; // 60–140px
       
       // Bias positions toward center using weighted random
