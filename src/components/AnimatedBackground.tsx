@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import dffLogo from '@/assets/dff-logo.png';
 
-const AnimatedBackground: React.FC = () => {
+interface AnimatedBackgroundProps {
+  isStreaming?: boolean;
+}
+
+const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ isStreaming = false }) => {
   const [triangles] = useState(() => 
     Array.from({ length: 50 }).map((_, i) => {
       const size = 40 + Math.random() * 140; // 40–180px (increased variance)
@@ -20,6 +25,22 @@ const AnimatedBackground: React.FC = () => {
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+      {/* Background Logo */}
+      <div 
+        className="absolute inset-0 flex items-center justify-center"
+        style={{
+          backgroundImage: `url(${dffLogo})`,
+          backgroundSize: '600%',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          filter: `blur(${isStreaming ? '50px' : '70px'})`,
+          opacity: isStreaming ? 0.4 : 0.2,
+          transform: 'scale(1)',
+          transition: 'all 2s ease-in-out',
+          animation: isStreaming ? 'ai-glow 3s ease-in-out infinite' : 'none',
+        }}
+      />
+      
       {triangles.map((t) => (
         <div
           key={t.id}
@@ -52,6 +73,21 @@ const AnimatedBackground: React.FC = () => {
           0%   { opacity: 1; filter: drop-shadow(0 0 2px rgba(255,255,255,0.3)); }
           50%  { opacity: 0.3; filter: drop-shadow(0 0 8px rgba(255,255,255,0.6)); }
           100% { opacity: 1; filter: drop-shadow(0 0 2px rgba(255,255,255,0.3)); }
+        }
+        
+        @keyframes ai-glow {
+          0%   { 
+            filter: blur(50px) drop-shadow(0 0 30px rgba(255,255,255,0.3));
+            opacity: 0.3;
+          }
+          50%  { 
+            filter: blur(40px) drop-shadow(0 0 60px rgba(255,255,255,0.6)) drop-shadow(0 0 100px rgba(255,255,255,0.4));
+            opacity: 0.5;
+          }
+          100% { 
+            filter: blur(50px) drop-shadow(0 0 30px rgba(255,255,255,0.3));
+            opacity: 0.3;
+          }
         }
       `}</style>
     </div>
