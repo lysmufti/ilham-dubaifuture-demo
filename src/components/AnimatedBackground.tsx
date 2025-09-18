@@ -26,7 +26,7 @@ const AnimatedBackground: React.FC = () => {
         className="absolute inset-0 flex items-center justify-center"
         style={{
           backgroundImage: `url(${dffLogo})`,
-          backgroundSize: '300%',
+          backgroundSize: '250%',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           filter: 'blur(70px)',
