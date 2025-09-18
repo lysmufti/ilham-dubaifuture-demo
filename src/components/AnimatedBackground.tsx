@@ -11,8 +11,10 @@ const AnimatedBackground: React.FC = () => {
       const duration = 15 + Math.random() * 20; // 15–35s (much faster)
       const delay = -Math.random() * 10;
       const rotation = Math.random() * 360; // Random rotation 0-360 degrees
+      const shimmerDelay = Math.random() * 3; // Pre-calculate shimmer delay
+      const shimmerDuration = 3 + Math.random() * 2; // Pre-calculate shimmer duration
 
-      return { id: i, size, left, top, opacity, duration, delay, rotation };
+      return { id: i, size, left, top, opacity, duration, delay, rotation, shimmerDelay, shimmerDuration };
     })
   );
 
@@ -29,8 +31,8 @@ const AnimatedBackground: React.FC = () => {
             height: `${t.size}px`,
             clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
             backgroundColor: `rgba(255,255,255,${t.opacity})`,
-            animation: `slow-float ${t.duration}s linear infinite, shimmer ${3 + Math.random() * 2}s ease-in-out infinite`,
-            animationDelay: `${t.delay}s, ${Math.random() * 3}s`,
+            animation: `slow-float ${t.duration}s linear infinite, shimmer ${t.shimmerDuration}s ease-in-out infinite`,
+            animationDelay: `${t.delay}s, ${t.shimmerDelay}s`,
             ['--rotation' as any]: `${t.rotation}deg`,
           } as React.CSSProperties}
         />
