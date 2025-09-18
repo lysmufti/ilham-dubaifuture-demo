@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, ChevronDown, Settings, Copy } from 'lucide-react';
+import { Send, ChevronDown, Settings, Copy, Square } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
@@ -34,6 +34,7 @@ const ChatInterface: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -108,6 +109,7 @@ const ChatInterface: React.FC = () => {
       };
 
       setMessages(prev => [...prev, botMessage]);
+      setStreamingMessageId(botMessage.id);
       
       // Stop streaming after text finishes streaming
       setTimeout(() => {
@@ -118,6 +120,7 @@ const ChatInterface: React.FC = () => {
               : msg
           )
         );
+        setStreamingMessageId(null);
       }, responseText.length * streamingSpeed + 500);
 
     } catch (error) {
@@ -136,6 +139,17 @@ const ChatInterface: React.FC = () => {
         inputRef.current?.focus();
       }, 100);
     }
+  };
+
+  const stopStreaming = (messageId: string) => {
+    setMessages(prev => 
+      prev.map(msg => 
+        msg.id === messageId 
+          ? { ...msg, isStreaming: false }
+          : msg
+      )
+    );
+    setStreamingMessageId(null);
   };
 
   const copyToClipboard = async (text: string) => {
@@ -233,6 +247,7 @@ const ChatInterface: React.FC = () => {
                   text={message.text} 
                   isStreaming={true}
                   speed={message.streamingSpeed || 35}
+                  onStopStreaming={() => stopStreaming(message.id)}
                 />
               ) : (
                 <div className="whitespace-pre-wrap break-words overflow-hidden">
@@ -258,6 +273,16 @@ const ChatInterface: React.FC = () => {
                 </div>
               )}
              </div>
+
+             {!message.isUser && message.isStreaming && (
+               <button
+                 onClick={() => stopStreaming(message.id)}
+                 className="mt-1 ml-1 p-1.5 rounded hover:bg-white/10 transition-colors opacity-70 hover:opacity-100 group"
+                 aria-label="Stop streaming"
+               >
+                 <Square size={14} className="text-muted-foreground group-hover:text-foreground transition-colors fill-current" />
+               </button>
+             )}
 
              {!message.isUser && !message.isStreaming && (
                <button

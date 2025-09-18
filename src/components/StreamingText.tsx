@@ -5,6 +5,7 @@ interface StreamingTextProps {
   text: string;
   isStreaming: boolean;
   onStreamingComplete?: () => void;
+  onStopStreaming?: () => void;
   speed?: number;
 }
 
@@ -18,6 +19,7 @@ const StreamingText: React.FC<StreamingTextProps> = ({
   text,
   isStreaming,
   onStreamingComplete,
+  onStopStreaming,
   speed = 50,
 }) => {
   const [displayedText, setDisplayedText] = useState('');
@@ -163,30 +165,40 @@ const StreamingText: React.FC<StreamingTextProps> = ({
     }
   }, [currentChunkIndex, currentCharIndex, streamingChunks, isStreaming, speed, onStreamingComplete]);
 
+  // Handle stop streaming
+  useEffect(() => {
+    if (!isStreaming && onStopStreaming) {
+      // If streaming was stopped, show complete text
+      setDisplayedText(text);
+    }
+  }, [isStreaming, onStopStreaming, text]);
+
   return (
     <span className="whitespace-pre-wrap break-words overflow-hidden">
-      <ReactMarkdown 
-        components={{
-          p: ({ children }) => <span className="block">{children}</span>,
-          h1: ({ children }) => <h1 className="text-xl font-bold mb-2 break-words">{children}</h1>,
-          h2: ({ children }) => <h2 className="text-lg font-bold mb-2 break-words">{children}</h2>,
-          h3: ({ children }) => <h3 className="text-base font-bold mb-1 break-words">{children}</h3>,
-          h4: ({ children }) => <h4 className="text-sm font-bold mb-1 break-words">{children}</h4>,
-          h5: ({ children }) => <h5 className="text-sm font-semibold mb-1 break-words">{children}</h5>,
-          h6: ({ children }) => <h6 className="text-xs font-semibold mb-1 break-words">{children}</h6>,
-          strong: ({ children }) => <strong className="font-bold">{children}</strong>,
-          em: ({ children }) => <em className="italic">{children}</em>,
-          code: ({ children }) => <code className="bg-white/10 px-1 py-0.5 rounded text-sm font-mono break-all">{children}</code>,
-          ul: ({ children }) => <ul className="list-disc list-inside my-2 space-y-1">{children}</ul>,
-          ol: ({ children }) => <ol className="list-decimal list-inside my-2 space-y-1">{children}</ol>,
-          li: ({ children }) => <li className="break-words">{children}</li>,
-        }}
-      >
-        {displayedText}
-      </ReactMarkdown>
-      {isStreaming && currentChunkIndex < streamingChunks.length && (
-        <span className="animate-pulse">|</span>
-      )}
+      <span className="relative inline">
+        <ReactMarkdown 
+          components={{
+            p: ({ children }) => <span className="inline">{children}</span>,
+            h1: ({ children }) => <h1 className="text-xl font-bold mb-2 break-words inline-block w-full">{children}</h1>,
+            h2: ({ children }) => <h2 className="text-lg font-bold mb-2 break-words inline-block w-full">{children}</h2>,
+            h3: ({ children }) => <h3 className="text-base font-bold mb-1 break-words inline-block w-full">{children}</h3>,
+            h4: ({ children }) => <h4 className="text-sm font-bold mb-1 break-words inline-block w-full">{children}</h4>,
+            h5: ({ children }) => <h5 className="text-sm font-semibold mb-1 break-words inline-block w-full">{children}</h5>,
+            h6: ({ children }) => <h6 className="text-xs font-semibold mb-1 break-words inline-block w-full">{children}</h6>,
+            strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+            em: ({ children }) => <em className="italic">{children}</em>,
+            code: ({ children }) => <code className="bg-white/10 px-1 py-0.5 rounded text-sm font-mono break-all">{children}</code>,
+            ul: ({ children }) => <ul className="list-disc list-inside my-2 space-y-1 inline-block w-full">{children}</ul>,
+            ol: ({ children }) => <ol className="list-decimal list-inside my-2 space-y-1 inline-block w-full">{children}</ol>,
+            li: ({ children }) => <li className="break-words">{children}</li>,
+          }}
+        >
+          {displayedText}
+        </ReactMarkdown>
+        {isStreaming && currentChunkIndex < streamingChunks.length && (
+          <span className="animate-pulse ml-0.5">|</span>
+        )}
+      </span>
     </span>
   );
 };
