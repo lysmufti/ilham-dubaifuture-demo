@@ -33,8 +33,8 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ isStreaming = f
           backgroundSize: 'contain',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          filter: 'blur(39px)',
-          opacity: isStreaming ? 0.4 : 0.2,
+          filter: 'blur(33px)',
+          opacity: isStreaming ? 0.3 : 0,
           transform: 'scale(1)',
           transition: 'opacity 2s ease-in-out',
         }}
