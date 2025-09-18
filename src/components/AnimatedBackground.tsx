@@ -6,8 +6,8 @@ const AnimatedBackground: React.FC = () => {
     const left = Math.random() * 100;
     const top = Math.random() * 100;
     const opacity = 0.05 + Math.random() * 0.03;
-    const duration = 90 + Math.random() * 60; // 90–150s
-    const delay = -Math.random() * 30;
+    const duration = 15 + Math.random() * 20; // 15–35s (much faster)
+    const delay = -Math.random() * 10;
 
     return { id: i, size, left, top, opacity, duration, delay };
   });
@@ -34,9 +34,11 @@ const AnimatedBackground: React.FC = () => {
       {/* Inline CSS so Tailwind can't purge it */}
       <style>{`
         @keyframes slow-float {
-          0%   { transform: translate(0,0) rotate(0deg); }
-          50%  { transform: translate(12px,-10px) rotate(2deg); }
-          100% { transform: translate(0,0) rotate(0deg); }
+          0%   { transform: translate(0, 0) rotate(0deg); }
+          25%  { transform: translate(40px, -20px) rotate(5deg); }
+          50%  { transform: translate(-30px, 40px) rotate(-3deg); }
+          75%  { transform: translate(20px, 20px) rotate(2deg); }
+          100% { transform: translate(0, 0) rotate(0deg); }
         }
       `}</style>
     </div>
