@@ -28,7 +28,12 @@
 ---
 
 ##  Architecture  
-ilham.ai is powered by a Retrieval-Augmented Generation (RAG) pipeline built based on my [ai-contextual-rag-agentic-arena](https://github.com/lysmufti/ai-contextual-rag-agentic-arena) project. 
+ilham.ai is powered by a Retrieval-Augmented Generation (RAG) pipeline built based on my [ai-contextual-rag-agentic-arena](https://github.com/lysmufti/ai-contextual-rag-agentic-arena) project.   
+The chatbot replies to user queries through a **webhook integration** with the an n8n backend, ensuring real-time responses directly from the RAG pipeline.
+
+<img width="1198" height="604" alt="image" src="https://github.com/user-attachments/assets/093b7060-6f7f-494b-9e16-25814d0abaf8" />
+
+
 
 1. **Two Streams of Input**  
    - **Conversational queries** (e.g., *“Hi, how are you?”*) are routed to a dedicated agent that responds warmly and politely without citations.  
@@ -52,17 +57,27 @@ ilham.ai is powered by a Retrieval-Augmented Generation (RAG) pipeline built bas
 ---
 
 ## Evaluation Results  
-ilham was benchmarked on **5 gold-standard questions** derived from the policy document. Evaluation was performed using both:  
+ilham was benchmarked on **5 true-north** derived from the policy document. Evaluation was performed using both:  
 - **Exact-match scoring** against gold answers.  
 - **LLM-as-a-Judge** (an evaluation model checking correctness, completeness, and hallucination risk).  
 
-| Question | Score | Notes |
-|----------|-------|-------|
-| 3 pillars of AI in Creative Industries | 5/5 | Perfect |
-| Stakeholder groups collaboration | 5/5 | Perfect |
-| Creative industries as testbed | 5/5 | Perfect |
-| Risks without governance | 4/5 | Expanded beyond benchmark scope |
-| Role of people in AI | 5/5 | Perfect |
+| Question | Gold Answer | Agent Answer | Correctness |
+|----------|-------------|--------------|-------------|
+| **What are the three core pillars outlined for AI in the creative industries?** | Transparency, Inclusivity, and People-centrism. Transparency ensures explainable and understandable AI systems. Inclusivity ensures accessibility and participation from diverse communities. People-centrism ensures that human creativity and judgment remain at the center and that AI enhances, not replaces, people in culture and art. | "The three core pillars outlined for AI in the creative industries are:<br>- **Transparency**: Ensuring clear understanding of how AI tools are developed, trained, and used.<br>- **Inclusivity**: Promoting equitable access and participation for diverse voices in creative processes.<br>- **People-centrism (Human-centrism)**: Prioritizing human creativity, agency, and ethical considerations in the integration of AI.<br><br>*(AI in Creative Industries, p.4–5, 13–14)*" | 5 |
+| **Which three stakeholder groups must collaborate to shape the responsible use of AI in the creative industries?** | Governments, the private sector, and creative professionals. Governments provide policy and governance frameworks. The private sector contributes innovation and investment. Creative professionals ensure cultural and artistic values are embedded and that AI serves creative purposes. | "The three key stakeholder groups that must collaborate are:<br>- **Technology developers** (AI developers and tech companies)<br>- **Creative professionals** (artists, writers, musicians, etc.)<br>- **Policymakers and regulators** (governments and regulatory bodies)<br><br>Their collaboration ensures responsible, ethical, and inclusive use of AI in the creative industries.<br>*(AI in Creative Industries, p.13–14)*" | 5 |
+| **Which sector is described as a “test bed” for AI applications due to its openness to experimentation and innovation?** | The creative industries sector. Creative industries are naturally open to experimentation and adoption of new technologies. Artists, designers, and cultural institutions test new AI applications and act as early adopters, which makes the sector suitable for piloting AI approaches. | "The creative industries are described as a “test bed” for AI applications due to their openness to experimentation and innovation. This sector stands out because it embraces new tools and approaches, allowing AI-driven creativity to flourish and push boundaries in areas like art, design, music, and literature.<br>*(AI in Creative Industries, p.5, 215–236)*" | 5 |
+| **What potential risks exist if AI is used without adequate governance in creative industries?** | Bias, exclusion, and erosion of trust. Bias can result from unrepresentative training data. Exclusion can occur if AI tools are only accessible to limited groups, increasing inequality. Erosion of trust happens when outputs are misleading, unauthentic, or opaque, undermining confidence in creative work. | "Potential risks of using AI without adequate governance in creative industries include:<br>- **Misinformation and hallucinations**: AI can generate plausible but inaccurate content, leading to the spread of misinformation.<br>- **Bias and cultural homogenisation**: AI may reinforce dominant cultural norms, marginalising less represented voices and reducing cultural diversity.<br>- **Unfair labour and IP practices**: Lack of clear regulation can result in disputes over ownership, compensation, and the protection of creators’ rights.<br>- **Socio-economic disparity**: Unequal access to AI tools can widen gaps between creators and communities.<br>- **Loss of trust and transparency**: Without clear processes, stakeholders may not understand how AI is used, eroding trust and accountability.<br>*(AI in Creative Industries, p.4, 8–9, 12, 14–16, 19)*" | 4 |
+| **What is the main conclusion regarding the role of people in AI for creative industries?** | People must remain at the center. AI should enhance human creativity rather than replace it. AI systems should augment imagination, efficiency, and reach while preserving authorship, agency, and cultural values. | "The main conclusion is that people must remain at the center of AI’s integration in creative industries. A balanced, people-centred approach is essential—one that fosters innovation while safeguarding human creativity, agency, and cultural diversity. This requires transparent, ethical frameworks and multidisciplinary collaboration to ensure AI empowers creators, protects their rights, and enables more diverse voices, rather than replacing or marginalizing them.<br>*(AI in Creative Industries, p.4, 8–9, 19–20)*" | 5 |
+
+---
+
+| Metric | Value |
+|--------|-------|
+| **RAG Evaluation Score** | 24 |
+| **Total Score (5 questions)** | 25 |
+| **Diff.** | 1 |
+| **Total Accuracy (%)** | 96.00% |
+
 
 **Total Score: 24/25 (96% correctness & accuracy).**  
 
