@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, ChevronDown, Settings } from 'lucide-react';
+import { Send, ChevronDown, Settings, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
@@ -7,6 +7,7 @@ import ReactMarkdown from 'react-markdown';
 import StreamingText from './StreamingText';
 import SettingsDialog from './SettingsDialog';
 import AnimatedBackground from '@/components/AnimatedBackground';
+import { useToast } from '@/hooks/use-toast';
 import dffLogo from '@/assets/dff-logo.png';
 import dffHeaderLogo from '@/assets/dff-header-logo.png';
 
@@ -20,6 +21,7 @@ interface Message {
 }
 
 const ChatInterface: React.FC = () => {
+  const { toast } = useToast();
   const [webhookUrl, setWebhookUrl] = useState("https://your-webhook-url.com/webhook");
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -136,6 +138,24 @@ const ChatInterface: React.FC = () => {
     }
   };
 
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast({
+        title: "Copied to clipboard",
+        duration: 2000,
+      });
+    } catch (error) {
+      console.error('Failed to copy:', error);
+      toast({
+        title: "Failed to copy",
+        description: "Please try again.",
+        variant: "destructive",
+        duration: 2000,
+      });
+    }
+  };
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -237,9 +257,19 @@ const ChatInterface: React.FC = () => {
                   </ReactMarkdown>
                 </div>
               )}
-            </div>
+             </div>
 
-            {message.isUser && (
+             {!message.isUser && !message.isStreaming && (
+               <button
+                 onClick={() => copyToClipboard(message.text)}
+                 className="mt-1 ml-1 p-1 rounded hover:bg-white/10 transition-colors opacity-50 hover:opacity-100 group"
+                 aria-label="Copy message"
+               >
+                 <Copy size={12} className="text-muted-foreground group-hover:text-foreground transition-colors" />
+               </button>
+             )}
+
+             {message.isUser && (
               <div className="text-xs text-muted-foreground mt-2">
                 {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </div>
