@@ -29,16 +29,17 @@ const StreamingText: React.FC<StreamingTextProps> = ({
   const parseTextIntoChunks = useCallback((inputText: string): StreamingChunk[] => {
     const chunks: StreamingChunk[] = [];
     const markdownPatterns = [
-      // Headers
-      /^(#{1,6}\s[^\n]+)/gm,
+      // Headers (must be at start of line)
+      /^(#{1,6}\s[^\n]+)$/gm,
       // Bold
-      /(\*\*[^*]+\*\*)/g,
+      /(\*\*[^*\n]+\*\*)/g,
       // Italic
-      /(\*[^*]+\*|_[^_]+_)/g,
+      /(\*[^*\n]+\*(?!\*))/g,
+      /(_[^_\n]+_)/g,
       // Inline code
-      /(`[^`]+`)/g,
-      // List items
-      /^(\s*[-*+]\s[^\n]+)/gm,
+      /(`[^`\n]+`)/g,
+      // List items (must be at start of line)
+      /^(\s*[-*+]\s[^\n]+)$/gm,
     ];
 
     let lastIndex = 0;
@@ -47,7 +48,8 @@ const StreamingText: React.FC<StreamingTextProps> = ({
     // Find all markdown matches
     markdownPatterns.forEach(pattern => {
       let match;
-      while ((match = pattern.exec(inputText)) !== null) {
+      const regex = new RegExp(pattern.source, pattern.flags);
+      while ((match = regex.exec(inputText)) !== null) {
         matches.push({
           start: match.index,
           end: match.index + match[0].length,
@@ -57,19 +59,28 @@ const StreamingText: React.FC<StreamingTextProps> = ({
       }
     });
 
-    // Sort matches by position
+    // Sort matches by position and remove overlaps
     matches.sort((a, b) => a.start - b.start);
+    const validMatches = matches.filter((match, index) => {
+      if (index === 0) return true;
+      const prevMatch = matches[index - 1];
+      return match.start >= prevMatch.end;
+    });
 
     // Build chunks
-    matches.forEach(match => {
+    validMatches.forEach(match => {
       // Add text before markdown
       if (match.start > lastIndex) {
         const textContent = inputText.slice(lastIndex, match.start);
-        // Split text into words for better streaming
-        const words = textContent.split(/(\s+)/);
-        words.forEach(word => {
-          if (word.trim()) {
-            chunks.push({ content: word, isComplete: false, type: 'text' });
+        // Split text preserving spaces
+        const parts = textContent.split(/(\s+)/);
+        parts.forEach(part => {
+          if (part) { // Include both text and whitespace
+            chunks.push({ 
+              content: part, 
+              isComplete: part.trim() === '', // Whitespace is always complete
+              type: 'text' 
+            });
           }
         });
       }
@@ -82,10 +93,14 @@ const StreamingText: React.FC<StreamingTextProps> = ({
     // Add remaining text
     if (lastIndex < inputText.length) {
       const remaining = inputText.slice(lastIndex);
-      const words = remaining.split(/(\s+)/);
-      words.forEach(word => {
-        if (word.trim()) {
-          chunks.push({ content: word, isComplete: false, type: 'text' });
+      const parts = remaining.split(/(\s+)/);
+      parts.forEach(part => {
+        if (part) { // Include both text and whitespace
+          chunks.push({ 
+            content: part, 
+            isComplete: part.trim() === '', // Whitespace is always complete
+            type: 'text' 
+          });
         }
       });
     }
@@ -149,22 +164,22 @@ const StreamingText: React.FC<StreamingTextProps> = ({
   }, [currentChunkIndex, currentCharIndex, streamingChunks, isStreaming, speed, onStreamingComplete]);
 
   return (
-    <span className="whitespace-pre-wrap">
+    <span className="whitespace-pre-wrap break-words overflow-hidden">
       <ReactMarkdown 
         components={{
-          p: ({ children }) => <span>{children}</span>,
-          h1: ({ children }) => <h1 className="text-xl font-bold mb-2">{children}</h1>,
-          h2: ({ children }) => <h2 className="text-lg font-bold mb-2">{children}</h2>,
-          h3: ({ children }) => <h3 className="text-base font-bold mb-1">{children}</h3>,
-          h4: ({ children }) => <h4 className="text-sm font-bold mb-1">{children}</h4>,
-          h5: ({ children }) => <h5 className="text-sm font-semibold mb-1">{children}</h5>,
-          h6: ({ children }) => <h6 className="text-xs font-semibold mb-1">{children}</h6>,
+          p: ({ children }) => <span className="block">{children}</span>,
+          h1: ({ children }) => <h1 className="text-xl font-bold mb-2 break-words">{children}</h1>,
+          h2: ({ children }) => <h2 className="text-lg font-bold mb-2 break-words">{children}</h2>,
+          h3: ({ children }) => <h3 className="text-base font-bold mb-1 break-words">{children}</h3>,
+          h4: ({ children }) => <h4 className="text-sm font-bold mb-1 break-words">{children}</h4>,
+          h5: ({ children }) => <h5 className="text-sm font-semibold mb-1 break-words">{children}</h5>,
+          h6: ({ children }) => <h6 className="text-xs font-semibold mb-1 break-words">{children}</h6>,
           strong: ({ children }) => <strong className="font-bold">{children}</strong>,
           em: ({ children }) => <em className="italic">{children}</em>,
-          code: ({ children }) => <code className="bg-white/10 px-1 py-0.5 rounded text-sm font-mono">{children}</code>,
+          code: ({ children }) => <code className="bg-white/10 px-1 py-0.5 rounded text-sm font-mono break-all">{children}</code>,
           ul: ({ children }) => <ul className="list-disc list-inside my-2 space-y-1">{children}</ul>,
           ol: ({ children }) => <ol className="list-decimal list-inside my-2 space-y-1">{children}</ol>,
-          li: ({ children }) => <li>{children}</li>,
+          li: ({ children }) => <li className="break-words">{children}</li>,
         }}
       >
         {displayedText}
