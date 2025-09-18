@@ -1,7 +1,9 @@
 # ilham.ai — Dubai Future Foundation AI Assistant  
 
 <p align="center">
-  <img src="https://i.imgur.com/Eqgf11L.gif" width="900" alt="Demo Animation">
+  <a href="https://ilham-dubaifuture-demo.lovable.app/">
+    <img src="https://i.imgur.com/Eqgf11L.gif" width="900" alt="Demo Animation">
+  </a>
 </p>
 
 <p align="center">
@@ -23,14 +25,11 @@
 </p>
 
 
+
 ---
 
 ##  Introduction  
 **ilham.ai** is an assistant designed for the **AI in Creative Industries initiative Guidlines** by the **Dubai Future Foundation**.   
-
-**Live Demo:** [https://ilham-dubaifuture-demo.lovable.app/](https://ilham-dubaifuture-demo.lovable.app/)  
-**Knowledge Base:** [AI in Creative Industries (PDF)](https://www.dubaifuture.ae/wp-content/uploads/2024/10/AI-in-creative-industries-English.pdf)  
-
 
 ##  Architecture  
 ilham.ai is powered by a Retrieval-Augmented Generation (RAG) pipeline built based on my [ai-contextual-rag-agentic-arena](https://github.com/lysmufti/ai-contextual-rag-agentic-arena) project.   
