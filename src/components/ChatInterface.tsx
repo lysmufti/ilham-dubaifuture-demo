@@ -179,7 +179,7 @@ const ChatInterface: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full relative">
-      <AnimatedBackground isStreaming={streamingMessageId !== null} />
+      <AnimatedBackground />
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-border">
         <div className="flex items-center gap-4">
