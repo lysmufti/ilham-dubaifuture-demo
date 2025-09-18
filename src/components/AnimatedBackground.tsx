@@ -7,7 +7,7 @@ const AnimatedBackground: React.FC = () => {
       
       const left = Math.random() * 100;
       const top = Math.random() * 100;
-      const opacity = 0.05 + Math.random() * 0.03;
+      const opacity = (0.05 + Math.random() * 0.03) * 0.9; // Reduced by 10%
       const duration = 15 + Math.random() * 20; // 15–35s (much faster)
       const delay = -Math.random() * 10;
       const rotation = Math.random() * 360; // Random rotation 0-360 degrees
