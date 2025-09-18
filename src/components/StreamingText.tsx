@@ -47,7 +47,7 @@ const StreamingText: React.FC<StreamingTextProps> = ({
   }, [currentIndex, text, isStreaming, speed, onStreamingComplete]);
 
   return (
-    <span>
+    <span className="whitespace-pre-wrap">
       {displayedText}
       {isStreaming && currentIndex < text.length && (
         <span className="animate-pulse">|</span>

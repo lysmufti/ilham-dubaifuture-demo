@@ -214,7 +214,9 @@ const ChatInterface: React.FC = () => {
                   speed={message.streamingSpeed || 35}
                 />
               ) : (
-                message.text
+                <div className="whitespace-pre-wrap">
+                  {message.text}
+                </div>
               )}
             </div>
 
