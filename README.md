@@ -3,12 +3,28 @@
 <p align="center">
   <img src="https://i.imgur.com/Eqgf11L.gif" width="900" alt="Demo Animation">
 </p>
+
 <p align="center">
   <a href="https://ilham-dubaifuture-demo.lovable.app/">
     <img src="https://img.shields.io/badge/Website-Live%20Demo-00BCD4?style=for-the-badge" alt="Live Demo">
   </a>
 </p>
 
+<p align="center">
+  <img src="https://i.imgur.com/QL3CZvA.gif" alt="Demo Video">
+</p>
+
+<p align="center">
+  <a href="https://www.loom.com/share/e00cb22ed27e4ad89a7b333bf0033879">
+    <img src="https://img.shields.io/badge/Loom-Watch%20Demo-FF4B4B?style=for-the-badge&logo=loom" alt="Watch Loom Demo">
+  </a>
+</p>
+
+
+
+
+[![Loom Demo](https://img.shields.io/badge/Loom-Watch%20Demo-FF4B4B?style=for-the-badge&logo=loom)](https://www.loom.com/share/e00cb22ed27e4ad89a7b333bf0033879)
+[![Watch the Loom Demo](https://cdn.loom.com/sessions/thumbnails/e00cb22ed27e4ad89a7b333bf0033879-with-play.gif)](https://www.loom.com/share/e00cb22ed27e4ad89a7b333bf0033879)
 
 ---
 
@@ -18,14 +34,6 @@
 **Live Demo:** [https://ilham-dubaifuture-demo.lovable.app/](https://ilham-dubaifuture-demo.lovable.app/)  
 **Knowledge Base:** [AI in Creative Industries (PDF)](https://www.dubaifuture.ae/wp-content/uploads/2024/10/AI-in-creative-industries-English.pdf)  
 
----
-
-##  Demo Videos  
-- [English Demo — Loom Placeholder](#)  
-- [Arabic Demo — Loom Placeholder](#)  
-
-
----
 
 ##  Architecture  
 ilham.ai is powered by a Retrieval-Augmented Generation (RAG) pipeline built based on my [ai-contextual-rag-agentic-arena](https://github.com/lysmufti/ai-contextual-rag-agentic-arena) project.   
