@@ -29,7 +29,7 @@ const AnimatedBackground: React.FC = () => {
           backgroundSize: 'contain',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          filter: 'blur(70px)',
+          filter: 'blur(49px)',
           opacity: 0.2,
           transform: 'scale(1)',
         }}
