@@ -1,4 +1,6 @@
-# ilham.ai — Dubai Future Foundation AI Assistant  
+<h1 align="center">ilham.ai</h1>
+<p align="center">DUBAI FUTURE FOUNDATION</p>
+
 
 <p align="center">
   <a href="https://ilham-dubaifuture-demo.lovable.app/">
