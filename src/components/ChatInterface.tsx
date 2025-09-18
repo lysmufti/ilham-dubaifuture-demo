@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { Send, ChevronDown, Settings, Copy, Square } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -20,13 +20,13 @@ interface Message {
   streamingSpeed?: number;
 }
 
-const ChatInterface: React.FC = () => {
+const ChatInterface: React.FC = React.memo(() => {
   const { toast } = useToast();
-  const [webhookUrl, setWebhookUrl] = useState("https://your-webhook-url.com/webhook");
+  const [webhookUrl, setWebhookUrl] = useState("https://laithmufti.app.n8n.cloud/webhook-test/test");
   const [messages, setMessages] = useState<Message[]>([
     {
         id: '1',
-        text: 'I’m ilham — here to help you navigate the future of creativity with AI, inspired by Dubai Future Foundation’s vision.',
+        text: "I'm ilham — here to help you navigate the future of creativity with AI, inspired by Dubai Future Foundation's vision.",
         isUser: false,
         timestamp: new Date(),
     }
@@ -61,7 +61,7 @@ const ChatInterface: React.FC = () => {
     return () => container.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = useCallback(async () => {
     if (!inputValue.trim() || isLoading) return;
 
     const userMessage: Message = {
@@ -139,9 +139,9 @@ const ChatInterface: React.FC = () => {
         inputRef.current?.focus();
       }, 100);
     }
-  };
+  }, [inputValue, isLoading, webhookUrl]);
 
-  const stopStreaming = (messageId: string) => {
+  const stopStreaming = useCallback((messageId: string) => {
     setMessages(prev => 
       prev.map(msg => 
         msg.id === messageId 
@@ -150,9 +150,9 @@ const ChatInterface: React.FC = () => {
       )
     );
     setStreamingMessageId(null);
-  };
+  }, []);
 
-  const copyToClipboard = async (text: string) => {
+  const copyToClipboard = useCallback(async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
       toast({
@@ -168,14 +168,16 @@ const ChatInterface: React.FC = () => {
         duration: 2000,
       });
     }
-  };
+  }, [toast]);
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyPress = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
-  };
+  }, [handleSendMessage]);
+
+  const memoizedMessages = useMemo(() => messages, [messages]);
 
   return (
     <div className="flex flex-col h-full relative">
@@ -217,7 +219,7 @@ const ChatInterface: React.FC = () => {
           WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, black 20px, black calc(100% - 20px), transparent 100%)'
         }}
       >
-        {messages.map((message) => (
+        {memoizedMessages.map((message) => (
           <div
             key={message.id}
             className={`flex items-start gap-3 animate-message-appear ${
@@ -345,7 +347,7 @@ const ChatInterface: React.FC = () => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyPress}
-            placeholder="Ask me about Dubai’s AI in Creative Industries guidelines…"
+            placeholder="Ask me about Dubai's AI in Creative Industries guidelines…"
             className="flex-1 bg-input border-border text-foreground placeholder:text-muted-foreground resize-none min-h-[2.5rem] max-h-32"
             disabled={isLoading}
             rows={1}
@@ -368,6 +370,6 @@ const ChatInterface: React.FC = () => {
       </div>
     </div>
   );
-};
+});
 
 export default ChatInterface;

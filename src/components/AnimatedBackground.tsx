@@ -7,7 +7,7 @@ interface AnimatedBackgroundProps {
 
 const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ isStreaming = false }) => {
   const [triangles] = useState(() => 
-    Array.from({ length: 50 }).map((_, i) => {
+    Array.from({ length: 20 }).map((_, i) => {
       const size = 40 + Math.random() * 140; // 40–180px (increased variance)
       
       const left = Math.random() * 100;
